@@ -1,0 +1,40 @@
+Rules of Rummy (2 player):
+- Standard 52 card deck, NO jokers. Add more decks if playing with more than 2 people.
+- Each person is dealt 10 cards
+- The remaining cards are placed in the middle, and the top card is placed face up next to it to start the discard pile.
+- The non-dealer goes first
+
+GOAL
+- Get rid of all 10 cards in your hand before the other player does.
+- See scoring.
+
+PLAY
+- When you begin your turn, you must pick up a card, either from the top of the deck or the face-up card on top of the discard pile.
+- You can meld or lay off any cards you wish, whenever you wish during your turn. See below for rules.
+- You end your turn by discarding one card of your choice on the top of the discard pile.
+
+Types of Melds:
+- Straights/Runs (3 cards or longer, of the same suit, in numerical order).
+  - Runs DO NOT WRAP! (no Queen, King, Ace, 2 runs)
+  - Ace is at the BOTTOM
+- Same card (3 or more cards of the same type, Ace, King, 2, etc)
+
+Laying off rules:
+- Once cards are melded by either player, they are placed on the table and belong to nobody.
+- Anybody can lay off cards at any time.
+- Cards can be added to either end of a run (provided they are the same suit and in order), or to a same card set.
+
+SCORING
+- When one of the players has gotten rid of all of the cards in their hand, the round ends.
+- The cards of the losing player's hand are added up as below:
+  - Number cards get their face value
+  - Face cards get 10 points regardless.
+  - Ace is 1pt.
+- The winning player is awarded that amount of points.
+
+Going Rummy (similar to Shooting the Moon)
+- If a player gets rid of all 10 cards in one turn, they "go rummy"
+- The points they earn are doubled.
+
+GAME END:
+- The game ends when a player reaches 100pts.
