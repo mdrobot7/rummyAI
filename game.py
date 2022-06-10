@@ -14,11 +14,10 @@ class Game:
     p2IsReal = False
     numcards = 0
 
-    def __init__(self, numdecks = 1, numcards = 5, p2IsReal = False):
-        self.deck = self.deck*numdecks
+    def __init__(self, p2IsReal = False):
         for i in range(5): random.shuffle(self.deck) #shuffle 5 times, just because
         self.p2IsReal = p2IsReal
-        self.numcards = numcards
+        self.numcards = 5
     
     def deal(self):
         for i in range(0, self.numcards*2, 2):
@@ -28,19 +27,36 @@ class Game:
             self.deck.pop(0)
         self.discard.append(self.deck[0])
         self.deck.pop(0)
+    
+    def sortHand(self, hand):
+        suits = ['H', 'D', 'S', 'C'] #this is the suit sort order
+        sorted = []
+        
+        for s in suits:
+            for i in range(1, 14):
+                for card in hand:
+                    if card == s + str(i):
+                        sorted.append(card)
+        return sorted
 
     def checkHand(self, hand):
-        isSet = True
-        isSetWrongCard = False
-        isRun = True
-        isRunWrongCard = False
-        for i in range(len(hand) - 1):
-            if hand[i][0] != hand[i + 1][0]: isSetWrongCard = True #these ifs allow for ONE wrong card in a hand of x cards (usually 5)
-            if int(hand[i][1:]) != int(hand[i + 1][1:]) + 1: isRunWrongCard = True
+        hand = hand.copy()
+        hand = self.sortHand(hand)
+        matchesCard0 = 0
+        matchesCard1 = 0
+        for card in hand: #check for sets (cards of the same value) ; checks for sets matching card 0 or 1 in the hand, counts cards that work
+            if card[1:] == hand[0][1:]: matchesCard0 += 1
+            if card[1:] == hand[1][1:]: matchesCard1 += 1
+        if matchesCard0 == 4 or matchesCard1 == 4: return True
 
-            if hand[i][0] != hand[i + 1][0] and isSetWrongCard: isSet = False
-            if int(hand[i][1:]) != int(hand[i + 1][1:]) + 1 and isRunWrongCard: isRun = False
-        if isSet or isRun: return True
+        #check for runs
+        runLen = 1
+        maxRunLen = 1
+        for i in range(len(hand) - 1):
+            if hand[i][0] == hand[i + 1][0] and int(hand[i][1:]) + 1 == int(hand[i + 1][1:]): runLen += 1
+            else: runLen = 1
+            if runLen > maxRunLen: maxRunLen = runLen
+        if maxRunLen >= 4: return True
         else: return False
 
     def waitForInput(self, prompt, inputs):
@@ -58,6 +74,12 @@ class Game:
         print("Top card of the discard pile: " + self.discard[0])
         play = self.waitForInput("Do you want to draw from the deck or the discard pile? [d, p] ", ["d", "p"])
         if play == "d":
+            if len(self.deck) == 0: #if the deck runs out
+                topDiscard = self.discard[0]
+                self.discard.pop(0)
+                self.deck = self.discard.copy()
+                self.discard = [topDiscard] #clear out and reset discard pile
+                for i in range(5): random.shuffle(self.deck) #shuffle 5 times
             cards.append(self.deck[0]) #add the card from the deck
             self.deck.pop(0)
         else:
@@ -76,12 +98,14 @@ class Game:
         self.deal()
         while True:
             print("\nPlayer 1: ")
+            self.p1cards = self.sortHand(self.p1cards)
             self.takeInput(1)
             if self.checkHand(self.p1cards): return 1
             print("\nPlayer 2: ")
+            self.p2cards = self.sortHand(self.p2cards)
             self.takeInput(2)
             if self.checkHand(self.p2cards): return 2
 
 if __name__ == "__main__":
-    game = Game(1, 5, True)
+    game = Game(True)
     print(game.run())
